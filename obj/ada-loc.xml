@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Locations >
+  <Project>
+    <vfs_file>C:\Users\jerzy\Documents\Ada\ada.gpr</vfs_file>
+    <file_marker current="true" column=" 1" line=" 1" >
+      <vfs_project>C:\Users\jerzy\Documents\Ada\ada.gpr</vfs_project>
+      <vfs_file>C:\Users\jerzy\Documents\Ada\src\simulation.adb</vfs_file>
+    </file_marker>
+  </Project>
+  <Project >
+    <vfs_file >C:\Users\jerzy\Documents\Nowy folder\ada.gpr</vfs_file>
+    <file_marker column=" 4" line=" 3">
+      <vfs_project >C:\Users\jerzy\Documents\Nowy folder\ada.gpr</vfs_project>
+      <vfs_file >C:\Users\jerzy\Documents\Nowy folder\src\simulation.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 4" line=" 3">
+      <vfs_project >C:\Users\jerzy\Documents\Nowy folder\ada.gpr</vfs_project>
+      <vfs_file >C:\Users\jerzy\Documents\Nowy folder\src\simulation.adb</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 1" line=" 1">
+      <vfs_project >C:\Users\jerzy\Documents\Nowy folder\ada.gpr</vfs_project>
+      <vfs_file >C:\Users\jerzy\Documents\Nowy folder\src\simulation.ads</vfs_file>
+    </file_marker>
+  </Project>
+</Locations>

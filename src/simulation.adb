@@ -100,17 +100,23 @@ procedure Simulation is
             Client_Nb := Client_Number;
             Consumption := Consumption_Time;
         end Start;
-
         Put_Line ("Started shooping " & Client_Name (Client_Nb));
         loop
             delay Duration (Random_Cooldown.Random (G)); --  simulate shopping
             Computer_Type := Random_Computer.Random (G2);
             -- take an computer
             S.Deliver (Computer_Type, Computer_Number);
-            Put_Line
-               (Client_Name (Client_Nb) & ": taken computer " &
-                Computer_Name (Computer_Type) & " number " &
-                Integer'Image (Computer_Number));
+            if Computer_Number /= 0 then
+                Put_Line
+                (Client_Name (Client_Nb) & ": taken computer " &
+                    Computer_Name (Computer_Type) & " number " &
+                    Integer'Image (Computer_Number));
+            else
+                Put_Line
+              (Client_Name (Client_Nb) & " failed to take a computer"); 
+            --that's why there were "taken computer number zero
+            --we need to do something about it
+            end if;
         end loop;
     end Client;
 

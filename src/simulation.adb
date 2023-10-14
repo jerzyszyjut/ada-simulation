@@ -109,7 +109,9 @@ procedure Simulation is
           Computer_Name (Computer_Type) & " number " &
           Integer'Image (Computer_Number));
       else
-        Put_Line (Client_Name (Client_Nb) & " failed to take a computer");
+        Put_Line
+         (Client_Name (Client_Nb) & " failed to take a computer " &
+          Computer_Name (Computer_Type));
         --that's why there were "taken computer number zero
         --we need to do something about it
       end if;
@@ -209,41 +211,52 @@ procedure Simulation is
     Put_Line ("Shop started");
     Setup_Variables;
     loop
-      accept Take (Product : in Product_Type; Number : in Integer) do
-        if Can_Accept (Product) then
-          Put_Line
-           ("Accepted product " & Product_Name (Product) & " number " &
-            Integer'Image (Number));
+      select
+        accept Take (Product : in Product_Type; Number : in Integer) do
+          if Can_Accept (Product) then
+            Put_Line
+             ("Accepted product " & Product_Name (Product) & " number " &
+              Integer'Image (Number));
 
-          Storage (Product) := Storage (Product) + 1;
-          In_Storage        := In_Storage + 1;
-        else
-          Put_Line
-           ("Rejected product " & Product_Name (Product) & " number " &
-            Integer'Image (Number));
-        end if;
-      end Take;
-      Storage_Contents;
-      accept Deliver (Computer : in Computer_Type; Number : out Integer) do
-        if Can_Deliver (Computer) then
-          Put_Line
-           ("Delivered computer " & Computer_Name (Computer) & " number " &
-            Integer'Image (Computer_Number (Computer)));
+            Storage (Product) := Storage (Product) + 1;
+            In_Storage        := In_Storage + 1;
+          else
+            Put_Line
+             ("Rejected product " & Product_Name (Product) & " number " &
+              Integer'Image (Number));
+            delay 2.0;
+          end if;
+        end Take;
+      or
+        delay 1.0;
+        Put_Line ("Shop is full, please wait");
+        Storage_Contents;
+      end select;
+      select
+        accept Deliver (Computer : in Computer_Type; Number : out Integer) do
+          if Can_Deliver (Computer) then
+            Put_Line
+             ("Delivered computer " & Computer_Name (Computer) & " number " &
+              Integer'Image (Computer_Number (Computer)));
 
-          for W in Product_Type loop
-            Storage (W) := Storage (W) - Computer_Content (Computer, W);
-            In_Storage  := In_Storage - Computer_Content (Computer, W);
-          end loop;
-          Number                     := Computer_Number (Computer);
-          Computer_Number (Computer) := Computer_Number (Computer) + 1;
-        else
-          Put_Line
-           ("Lacking products for Computer " & Computer_Name (Computer));
-
-          Number := 0;
-        end if;
-      end Deliver;
-      Storage_Contents;
+            for W in Product_Type loop
+              Storage (W) := Storage (W) - Computer_Content (Computer, W);
+              In_Storage  := In_Storage - Computer_Content (Computer, W);
+            end loop;
+            Number                     := Computer_Number (Computer);
+            Computer_Number (Computer) := Computer_Number (Computer) + 1;
+          else
+            Put_Line
+             ("Lacking products for Computer " & Computer_Name (Computer));
+            Number := 0;
+            delay 2.0;
+          end if;
+        end Deliver;
+      or
+        delay 1.0;
+        Put_Line ("Shop is lacking products, please wait");
+        Storage_Contents;
+      end select;
     end loop;
   end Shop;
 

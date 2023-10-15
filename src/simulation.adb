@@ -109,7 +109,9 @@ procedure Simulation is
           Computer_Name (Computer_Type) & " number " &
           Integer'Image (Computer_Number));
       else
-        Put_Line (Client_Name (Client_Nb) & " failed to take a computer");
+        Put_Line
+         (Client_Name (Client_Nb) & " failed to take a computer " &
+          Computer_Name (Computer_Type));
         --that's why there were "taken computer number zero
         --we need to do something about it
       end if;

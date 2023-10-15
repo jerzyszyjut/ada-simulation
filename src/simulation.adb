@@ -102,7 +102,14 @@ procedure Simulation is
       delay Duration (Random_Cooldown.Random (G)); --  simulate shopping
       Computer_Type := Random_Computer.Random (G2);
       -- take an computer
-      S.Deliver (Computer_Type, Computer_Number);
+      select
+        S.Deliver (Computer_Type, Computer_Number);
+      or --  if there is no computer, wait for one
+        delay Duration (2);
+        Put_Line
+         ("Shop is busy " & Client_Name (Client_Nb) &
+          " is waiting for a computer " & Computer_Name (Computer_Type));
+      end select;
       if Computer_Number /= 0 then
         Put_Line
          (Client_Name (Client_Nb) & ": taken computer " &
@@ -121,7 +128,8 @@ procedure Simulation is
   task body Shop is
     Storage_Capacity : constant Integer := 40;
     type Storage_type is array (Product_Type) of Integer;
-    Storage              : Storage_type := (0, 0, 0, 0, 0, 0, 0, 0, 0);
+    --  Storage              : Storage_type := (0, 0, 0, 0, 0, 0, 0, 0, 0);
+    Storage              : Storage_type := (1, 1, 4, 1, 1, 1, 3, 1, 1);
     Computer_Content     : array (Computer_Type, Product_Type) of Integer :=
      ((1, 1, 4, 1, 1, 1, 3, 1, 1), (1, 1, 2, 1, 1, 1, 0, 1, 1),
       (1, 0, 1, 1, 1, 1, 4, 2, 0));
@@ -200,11 +208,11 @@ procedure Simulation is
 
     procedure Storage_Contents is
     begin
+      Put ("Storage contents: ");
       for W in Product_Type loop
-        Put_Line
-         ("Storage contents: " & Integer'Image (Storage (W)) & " " &
-          Product_Name (W));
+        Put (Product_Name (W) & " " & Integer'Image (Storage (W)) & " ");
       end loop;
+      New_Line;
     end Storage_Contents;
 
   begin
@@ -228,6 +236,10 @@ procedure Simulation is
       Storage_Contents;
       accept Deliver (Computer : in Computer_Type; Number : out Integer) do
         if Can_Deliver (Computer) then
+          Put_Line
+           ("Received order for " & Computer_Name (Computer) &
+            " begining to assebmle");
+          delay Duration (3); --  simulate delivery
           Put_Line
            ("Delivered computer " & Computer_Name (Computer) & " number " &
             Integer'Image (Computer_Number (Computer)));

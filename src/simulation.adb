@@ -2,6 +2,9 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO;
 with Ada.Numerics.Discrete_Random;
 
+-- Jerzy Szyjut 193064
+-- Artur Bińczyk 193138
+
 procedure Simulation is
   Number_Of_Products  : constant Integer := 9;
   Number_Of_Computers : constant Integer := 3;

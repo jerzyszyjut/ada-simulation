@@ -3,7 +3,7 @@ with Ada.Integer_Text_IO;
 with Ada.Numerics.Discrete_Random;
 
 -- Jerzy Szyjut 193064
--- Artur Bińczyk 193138
+-- Artur Binczyk 193138
 
 procedure Simulation is
   Number_Of_Products  : constant Integer := 9;
@@ -211,11 +211,11 @@ procedure Simulation is
 
     procedure Storage_Contents is
     begin
-      Put ("Storage contents: ");
       for W in Product_Type loop
-        Put (Product_Name (W) & " " & Integer'Image (Storage (W)) & " ");
+        Put_Line
+         ("Storage contents: " & Integer'Image (Storage (W)) & " " &
+          Product_Name (W));
       end loop;
-      New_Line;
     end Storage_Contents;
 
   begin
